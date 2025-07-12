@@ -6,7 +6,6 @@
 
 generator client {
   provider = "prisma-client-js"
- 
 }
 
 datasource db {
@@ -24,22 +23,23 @@ model Company {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  name      String
-  role      Role     @default(TECHNICIAN)
-  orders    Order[]
-  companyId Int
-  company   Company @relation(fields: [companyId],references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id             Int            @id @default(autoincrement())
+  email          String         @unique
+  password       String
+  name           String
+  role           Role           @default(TECHNICIAN)
+  orders         Order[]
+  companyId      Int
+  company        Company        @relation(fields: [companyId], references: [id])
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
+  orderHistories OrderHistory[] @relation("UserToHistory")
 }
 
 model Order {
-  id               Int           @id @default(autoincrement())
+  id               Int            @id @default(autoincrement())
   description      String
-  status           OrderStatus   @default(RECEIVED)
+  status           OrderStatus    @default(RECEIVED)
   clientName       String
   contact          String
   notifyBy         String
@@ -47,11 +47,12 @@ model Order {
   device           String
   stateAtReception String
   companyId        Int
-  company          Company  @relation(fields: [companyId], references: [id])
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
+  company          Company        @relation(fields: [companyId], references: [id])
+  createdAt        DateTime       @default(now())
+  updatedAt        DateTime       @updatedAt
   userId           Int
-  user             User          @relation(fields: [userId], references: [id])
+  user             User           @relation(fields: [userId], references: [id])
+  orderHistories   OrderHistory[] @relation("OrderToHistory")
 }
 
 enum OrderStatus {
@@ -61,9 +62,22 @@ enum OrderStatus {
   DELIVERED
 }
 
-
 enum Role {
   ADMIN
   TECHNICIAN
 }
 
+model OrderHistory {
+  id         Int         @id @default(autoincrement())
+  orderId    Int
+  order      Order       @relation("OrderToHistory", fields: [orderId], references: [id])
+  changedBy  Int
+  user       User        @relation("UserToHistory", fields: [changedBy], references: [id])
+  fromStatus OrderStatus
+  toStatus   OrderStatus
+  note       String?
+  createdAt  DateTime    @default(now())
+
+  @@index([orderId])
+  @@index([changedBy])
+}

@@ -38,12 +38,12 @@ export class CreateOrderDto {
   @IsString({ message: 'El estado de recepción debe ser un texto' })
   stateAtReception: string;
 
-  @IsOptional()
-  @IsInt({ message: 'El ID del técnico debe ser un número entero' })
-  technicianId?: number;
+  // @IsOptional()
+  // @IsInt({ message: 'El ID del técnico debe ser un número entero' })
+  // technicianId?: number;
   
-  @IsInt({ message: 'El ID de la empresa debe ser un número entero' })
-  companyId: number;
+  // @IsInt({ message: 'El ID de la empresa debe ser un número entero' })
+  // companyId: number;
 
   @IsOptional()
   @IsEnum(OrderStatus, {
