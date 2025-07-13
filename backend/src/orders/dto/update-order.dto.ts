@@ -5,16 +5,28 @@ import {
   IsInt,
 } from 'class-validator';
 import { OrderStatus } from './create-order.dto';
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 
 export class UpdateOrderDto {
 
-  @ApiProperty({required: false,example: 'Nueva nota interna', description: 'Nota interna del pedido'})
+  // @ApiProperty({required: false,example: 'Nueva nota interna', description: 'Nota interna del pedido'})
+  // @IsOptional()
+  // @IsEnum(OrderStatus, {
+  //   message: `El estado debe ser uno de: ${Object.values(OrderStatus).join(', ')}`,
+  // })
+  // status?: OrderStatus;
+
+  @ApiPropertyOptional({
+    enum: OrderStatus,
+    example: OrderStatus.IN_PROCESS,
+    description: 'Nuevo estado de la orden',
+  })
   @IsOptional()
   @IsEnum(OrderStatus, {
     message: `El estado debe ser uno de: ${Object.values(OrderStatus).join(', ')}`,
   })
   status?: OrderStatus;
+
 
   @ApiProperty({required: false,example: 'Nota interna del pedido', description: 'Nota interna del pedido'})
   @IsOptional()
@@ -51,8 +63,8 @@ export class UpdateOrderDto {
   @IsString({ message: 'El método de notificación debe ser un texto' })
   notifyBy?: string;
   
-  @ApiProperty({required: false,example: 1, description: 'ID de la empresa'})
-  @IsOptional()
-  @IsInt({ message: 'El ID del técnico debe ser un número entero' })
-  technicianId?: number;
+//   @ApiProperty({required: false,example: 1, description: 'ID de la empresa'})
+//   @IsOptional()
+//   @IsInt({ message: 'El ID del técnico debe ser un número entero' })
+//   technicianId?: number;
 }

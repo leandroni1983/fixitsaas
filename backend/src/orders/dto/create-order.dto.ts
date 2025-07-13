@@ -1,4 +1,4 @@
-import { ApiProperty } from '@nestjs/swagger';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsEnum,
   IsNotEmpty,
@@ -51,7 +51,12 @@ export class CreateOrderDto {
   
   // @IsInt({ message: 'El ID de la empresa debe ser un número entero' })
   // companyId: number;
-  @ApiProperty({example: 1, description: 'ID de la empresa'})
+
+  @ApiPropertyOptional({
+    enum: OrderStatus,
+    example: OrderStatus.RECEIVED,
+    description: 'Estado inicial de la orden',
+  })
   @IsOptional()
   @IsEnum(OrderStatus, {
     message: `El estado debe ser uno de: ${Object.values(OrderStatus).join(', ')}`,
