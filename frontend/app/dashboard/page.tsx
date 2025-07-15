@@ -23,10 +23,8 @@ export default function DashboardPage() {
       try {
         console.log('Token en localStorage:', localStorage.getItem('token')); // Depuración
         const response = await getOrders();
-        console.log('Respuesta de /orders:', response.data); // Depuración
         setOrders(response.data);
       } catch (error: any) {
-        console.error('Error al cargar órdenes:', error);
         setError(error.response?.data?.message || 'Error al cargar órdenes');
       }
     };

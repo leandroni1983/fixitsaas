@@ -20,7 +20,7 @@ const {
   const onSubmit = async (data: OrderForm) => {
     try {
       await api.post(`${process.env.NEXT_PUBLIC_API_URL}/orders`, data);
-      router.push('/orders'); // Redirigí a donde quieras después de crear
+      router.push('/dashboard'); // Redirigí a donde quieras después de crear
     } catch (error) {
       console.error('Error al crear la orden:', error);
     }

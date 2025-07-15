@@ -105,7 +105,7 @@ export default function RegisterPage() {
 
           <button
             type="submit"
-            className="w-full bg-primary text-white p-2 rounded-md hover:bg-blue-700"
+            className="w-full  text-white p-2 rounded-md bg-blue-800 hover:bg-blue-600 transition-colors"
           >
             Registrar
           </button>
