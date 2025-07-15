@@ -18,10 +18,10 @@ export class CreateAdminDto {
   @IsEmail({}, { message: 'Debe ser un correo electrónico válido' })
   email: string;
 
-    @ApiProperty({
-        example: 'AdminPassw0rd!',
-        description: 'Contraseña segura del administrador (mín. 8 caracteres)',
-    })
+  @ApiProperty({
+      example: 'AdminPassw0rd!',
+      description: 'Contraseña segura del administrador (mín. 8 caracteres)',
+  })
   @MinLength(8)
   password: string;
 

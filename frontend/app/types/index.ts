@@ -6,10 +6,17 @@ export type User = {
   companyId: number;
 };
 
+export type OrderStatus = {
+  RECEIVED: 'RECEIVED',
+  IN_PROCESS: 'IN_PROCESS',
+  READY: 'READY',
+  DELIVERED: 'DELIVERED',
+}
+
 export type Order = {
   id: number;
   description: string;
-  status: 'RECEIVED' | 'IN_PROCESS' | 'READY' | 'DELIVERED';
+  status: OrderStatus[keyof OrderStatus];
   clientName: string;
   contact: string;
   notifyBy: string;
@@ -47,4 +54,11 @@ export type LoginResponse = {
 };
 export type RegisterResponse = {
   user: User;
+};
+
+export type RegisterAdminData = {
+  email: string;
+  password: string;
+  name: string;
+  companyName: string;
 };
