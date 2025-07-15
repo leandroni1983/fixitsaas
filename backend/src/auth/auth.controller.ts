@@ -9,7 +9,7 @@ import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nes
 export class AuthController {
     constructor(private readonly authService:AuthService){}
 
-    @Post('login')
+    @Post('login') // Ruta para iniciar sesión
     @ApiOperation({ summary: 'Iniciar sesión' })
     @ApiBody({ type: LoginAuthDto })
     @ApiResponse({ status: 200, description: 'Inicio de sesión exitoso' })

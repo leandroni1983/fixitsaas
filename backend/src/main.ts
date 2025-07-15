@@ -37,7 +37,7 @@ async function bootstrap() {
       tagsSorter: 'auth,users,companies,orders',
     },
   })
-
+  app.enableCors({origin: 'http://localhost:5000'});
   await app.listen(process.env.PORT ?? 3001);
 }
 
