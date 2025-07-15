@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { getOrders } from '../lib/api';
 import ProtectedRoute from '../components/ProtectedRoute';
+import { useRouter } from 'next/navigation';
 
 type Order = {
   id: number;
@@ -13,6 +14,7 @@ type Order = {
 };
 
 export default function DashboardPage() {
+  const router = useRouter();
   const [orders, setOrders] = useState<Order[]>([]);
   const [error, setError] = useState<string | null>(null);
 
@@ -34,6 +36,14 @@ export default function DashboardPage() {
   return (
     <ProtectedRoute>
       <div className="container mx-auto p-4">
+
+        <button
+            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            onClick={() => router.push('/orders/create')}
+          >
+            Crear nueva orden
+        </button>
+
         <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         {orders.length === 0 && !error && <p className="text-gray-600">No hay órdenes disponibles</p>}

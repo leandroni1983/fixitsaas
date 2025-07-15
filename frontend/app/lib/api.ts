@@ -1,7 +1,8 @@
 import axios from 'axios';
-import { RegisterUserData } from '../types';
+import { LoginUserData, RegisterAdminData, RegisterUserData } from '../types';
+
+
 const api = axios.create({
-  //baseURL: 'http://localhost:3001',
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Content-Type': 'application/json',
@@ -30,12 +31,10 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
+// Funciones para interactuar con la API
 export const registerUser = (data: RegisterUserData) => api.post('/users', data);
-
-export const loginUser = (data: { email: string; password: string }) =>
-  api.post('/auth/login', data);
-
+export const registerAdmin = (data: RegisterAdminData) => api.post('/users/register-admin', data);
+export const loginUser = (data:LoginUserData) => api.post('/auth/login', data);
 export const getOrders = () => api.get('/orders');
 
 export default api;
