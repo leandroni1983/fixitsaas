@@ -1,13 +1,14 @@
 import axios from 'axios';
-
+import { RegisterUserData } from '../types';
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api', // Cambia por la URL de tu backend
+  //baseURL: 'http://localhost:3001',
+  baseURL: process.env.NEXT_PUBLIC_API_URL,
   headers: {
     'Content-Type': 'application/json',
   },
 });
 
-// Interceptor para añadir el token JWT a las peticiones
+// Interceptor para añadir el token JWT
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -30,13 +31,7 @@ api.interceptors.response.use(
   }
 );
 
-export const registerUser = (data: {
-  email: string;
-  password: string;
-  name: string;
-  role: 'ADMIN' | 'TECHNICIAN';
-  companyId: number;
-}) => api.post('/auth/register', data);
+export const registerUser = (data: RegisterUserData) => api.post('/users', data);
 
 export const loginUser = (data: { email: string; password: string }) =>
   api.post('/auth/login', data);

@@ -31,7 +31,7 @@ export class OrdersService {
    // The method uses the Prisma service to query the database and returns the orders.
    // It also handles the case where the user has no orders by returning an empty array.
    async findAll(user: any) {
-    if(user.role === 'Admin'){
+    if(user.role === 'ADMIN'){
     return this.prisma.order.findMany({
      where: { companyId: user.companyId },
     });

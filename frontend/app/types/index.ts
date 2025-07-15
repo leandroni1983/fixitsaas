@@ -26,3 +26,25 @@ export type Company = {
   id: number;
   name: string;
 };
+
+
+export type RegisterUserData = {
+  email: string;
+  password: string;
+  name: string;
+  role: 'ADMIN' | 'TECHNICIAN';
+  companyId: number;
+};
+
+export type LoginUserData = {
+  email: string;
+  password: string;
+};
+
+export type LoginResponse = {
+  accessToken: string;
+  user: User;
+};
+export type RegisterResponse = {
+  user: User;
+};

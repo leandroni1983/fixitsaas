@@ -33,7 +33,7 @@ export class UpdateOrderDto {
   @IsString({ message: 'La nota interna debe ser un texto' })
   internalNote?: string;
   
-  @ApiProperty({required: false,example: '2023-10-01T10:00:00Z', description: 'Fecha y hora de actualización'})
+  @ApiProperty({required: false,example: 'Jose Lopez', description: 'Nombre del cliente'})
   @IsOptional()
   @IsString({ message: 'El nombre del cliente debe ser un texto' })
   clientName?: string;

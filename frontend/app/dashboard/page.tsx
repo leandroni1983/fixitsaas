@@ -1,7 +1,8 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { getOrders } from '../lib/api';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 type Order = {
   id: number;
@@ -13,28 +14,36 @@ type Order = {
 
 export default function DashboardPage() {
   const [orders, setOrders] = useState<Order[]>([]);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await axios.get('http://your-backend-url/api/orders');
+        console.log('Token en localStorage:', localStorage.getItem('token')); // Depuración
+        const response = await getOrders();
+        console.log('Respuesta de /orders:', response.data); // Depuración
         setOrders(response.data);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Error al cargar órdenes:', error);
+        setError(error.response?.data?.message || 'Error al cargar órdenes');
       }
     };
     fetchOrders();
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
-      <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {orders.map((order) => (
-          <OrderCard key={order.id} order={order} />
-        ))}
+    <ProtectedRoute>
+      <div className="container mx-auto p-4">
+        <h1 className="text-3xl font-bold mb-6">Dashboard</h1>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
+        {orders.length === 0 && !error && <p className="text-gray-600">No hay órdenes disponibles</p>}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          {orders.map((order) => (
+            <OrderCard key={order.id} order={order} />
+          ))}
+        </div>
       </div>
-    </div>
+    </ProtectedRoute>
   );
 }
 

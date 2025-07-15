@@ -24,7 +24,7 @@ export default function RegisterPage() {
 
   const onSubmit = async (data: RegisterForm) => {
     try {
-      await axios.post('http://your-backend-url/api/users', data);
+      await axios.post('http://localhost:3001/users', data);
       router.push('/auth/login');
     } catch (error) {
       console.error('Error al registrar:', error);
@@ -91,3 +91,5 @@ export default function RegisterPage() {
     </div>
   );
 }
+
+

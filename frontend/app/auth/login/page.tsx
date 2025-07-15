@@ -24,9 +24,9 @@ export default function LoginPage() {
   const onSubmit = async (data: LoginForm) => {
     try {
       const response = await loginUser(data);
-      const { token, user } = response.data;
-      localStorage.setItem('token', token);
-      setUser(user);
+      const { accessToken } = response.data; // Ajustado para accessToken
+      localStorage.setItem('token', accessToken); // Guarda accessToken
+      setUser(null); // No hay datos de usuario en la respuesta
       router.push('/dashboard');
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
@@ -37,10 +37,10 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6 text-center">Iniciar Sesión</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center text-primary">Iniciar Sesión</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium">Email</label>
+            <label className="block text-sm font-medium text-black">Email</label>
             <input
               {...register('email')}
               className="w-full p-2 border rounded-md"
@@ -49,7 +49,7 @@ export default function LoginPage() {
             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium">Contraseña</label>
+            <label className="block text-sm font-medium text-black">Contraseña</label>
             <input
               {...register('password')}
               className="w-full p-2 border rounded-md"
