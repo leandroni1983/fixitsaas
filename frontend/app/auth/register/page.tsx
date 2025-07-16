@@ -47,20 +47,20 @@ export default function RegisterPage() {
   return (
     <div className="min-h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6 text-center">Registro</h1>
+        <h1 className="text-2xl font-bold mb-6 text-center text-blue-800">Registro</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium">Nombre</label>
+            <label className="block text-sm font-medium text-blue-800">Nombre</label>
             <input {...register('name')} className="w-full p-2 border rounded-md" type="text" />
             {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium">Email</label>
+            <label className="block text-sm font-medium text-blue-800">Email</label>
             <input {...register('email')} className="w-full p-2 border rounded-md" type="email" />
             {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium">Contraseña</label>
+            <label className="block text-sm font-medium text-blue-800">Contraseña</label>
             <input
               {...register('password')}
               className="w-full p-2 border rounded-md"
@@ -69,7 +69,7 @@ export default function RegisterPage() {
             {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
           </div>
           <div>
-            <label className="block text-sm font-medium">Rol</label>
+            <label className="block text-sm font-medium text-blue-800">Rol</label>
             <select {...register('role')} className="w-full p-2 border rounded-md">
               <option value="ADMIN">Admin</option>
               <option value="TECHNICIAN">Técnico</option>
@@ -79,7 +79,7 @@ export default function RegisterPage() {
 
           {watchRole === 'ADMIN' ? (
             <div>
-              <label className="block text-sm font-medium">Nombre de la empresa</label>
+              <label className="block text-sm font-medium text-blue-800">Nombre de la empresa</label>
               <input
                 {...register('companyName')}
                 className="w-full p-2 border rounded-md"
@@ -91,7 +91,7 @@ export default function RegisterPage() {
             </div>
           ) : (
             <div>
-              <label className="block text-sm font-medium">Empresa (ID)</label>
+              <label className="block text-sm font-medium text-blue-800">Empresa (ID)</label>
               <input
                 {...register('companyId', { valueAsNumber: true })}
                 className="w-full p-2 border rounded-md"
