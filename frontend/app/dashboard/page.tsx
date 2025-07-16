@@ -21,7 +21,6 @@ export default function DashboardPage() {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        console.log('Token en localStorage:', localStorage.getItem('token')); // Depuración
         const response = await getOrders();
         setOrders(response.data);
       } catch (error: any) {

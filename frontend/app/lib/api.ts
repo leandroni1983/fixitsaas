@@ -36,5 +36,4 @@ export const registerUser = (data: RegisterUserData) => api.post('/users', data)
 export const registerAdmin = (data: RegisterAdminData) => api.post('/users/register-admin', data);
 export const loginUser = (data:LoginUserData) => api.post('/auth/login', data);
 export const getOrders = () => api.get('/orders');
-
 export default api;

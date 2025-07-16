@@ -5,7 +5,7 @@ import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { registerAdmin, registerUser } from '@/app/lib/api';
-import registerSchema from './registerschema';
+import { registerSchema } from '@/app/types/schemas';
 
 
 // Tipo inferido del esquema de validación

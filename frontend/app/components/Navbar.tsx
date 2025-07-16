@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 
 export default function Navbar() {
   const { user, logout } = useAuth();
-
+  
   return (
     <nav className="bg-primary text-white p-4">
       <div className="container mx-auto flex justify-between items-center">
