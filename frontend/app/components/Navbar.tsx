@@ -13,9 +13,16 @@ export default function Navbar() {
         <div className="space-x-4">
           {user ? (
             <>
-              <Link href="/dashboard" className="hover:underline">Dashboard</Link>
-              <Link href="/orders" className="hover:underline">Órdenes</Link>
-              <button onClick={logout} className="hover:underline">Cerrar Sesión</button>
+              <Link href="/dashboard" className="px-4 py-2 text-white font-medium rounded-md 
+              transition-colors duration-300 hover:bg-gray-900active:bg-slate-950  hover:ring-gray-800  hover:ring-2 
+              focus:outline-none focus:ring-2 focus:ring-opacity-50 ">Dashboard</Link>
+              <Link href="/orders" className="px-4 py-2  text-white font-medium rounded-md 
+              transition-colors duration-300 hover:bg-gray-900active:bg-slate-950   hover:ring-gray-800  hover:ring-2 
+              focus:outline-none focus:ring-2 focus:ring-opacity-50 ">Órdenes</Link>
+              <button onClick={logout} className="px-4 py-2 text-white font-medium rounded-md 
+              transition-colors duration-300 hover:bg-gray-900active:bg-slate-950
+              focus:outline-none focus:ring-2 focus:ring-opacity-50 hover:ring-gray-800  hover:ring-2 
+              ">Cerrar Sesión</button>
             </>
           ) : (
             <>

@@ -2,7 +2,7 @@
 
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { orderSchema, OrderForm } from '../orderSchema';
+import { orderSchema, OrderForm } from './orderSchema';
 import { useRouter } from 'next/navigation';
 import api from '@/app/lib/api';
 
@@ -29,40 +29,40 @@ const {
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-50">
       <div className="bg-white p-6 rounded-lg shadow-md w-full max-w-xl">
-        <h1 className="text-2xl font-bold mb-4">Crear Orden de Reparación</h1>
+        <h1 className="text-2xl font-bold mb-4  text-blue-800">Crear Orden de Reparación</h1>
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium">Nombre del Cliente</label>
+            <label className="block text-sm font-medium text-blue-800">Nombre del Cliente</label>
             <input {...register('clientName')} className="input" />
             {errors.clientName && <p className="text-red-500">{errors.clientName.message}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium">Contacto</label>
+            <label className="block text-sm font-medium text-blue-800">Contacto</label>
             <input {...register('contact')} className="input" />
             {errors.contact && <p className="text-red-500">{errors.contact.message}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium">Notificar por</label>
+            <label className="block text-sm font-medium text-blue-800">Notificar por</label>
             <input {...register('notifyBy')} className="input" />
             {errors.notifyBy && <p className="text-red-500">{errors.notifyBy.message}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium">Equipo ingresado</label>
+            <label className="block text-sm font-medium text-blue-800">Equipo ingresado</label>
             <input {...register('device')} className="input" />
             {errors.device && <p className="text-red-500">{errors.device.message}</p>}
           </div>
 
           <div>
-            <label className="block text-sm font-medium">Descripción del problema</label>
+            <label className="block text-sm font-medium text-blue-800">Descripción del problema</label>
             <textarea {...register('description')} className="input" />
             {errors.description && <p className="text-red-500">{errors.description.message}</p>}
           </div>
 
           <div>
-              <label className="block text-sm font-medium">Fecha y hora de recepción</label>
+              <label className="block text-sm font-medium text-blue-800">Fecha y hora de recepción</label>
               <input
                 {...register('stateAtReception')}
                 type="datetime-local"
