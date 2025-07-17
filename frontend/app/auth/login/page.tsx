@@ -16,11 +16,13 @@ const loginSchema = z.object({
 type LoginForm = z.infer<typeof loginSchema>;
 
 export default function LoginPage() {
+  
   const router = useRouter();
   const { setUser } = useAuth();
   const { register, handleSubmit, formState: { errors } } = useForm<LoginForm>({
     resolver: zodResolver(loginSchema),
   });
+
 
   const onSubmit = async (data: LoginForm) => {
     try {
@@ -32,6 +34,7 @@ export default function LoginPage() {
         name: decodedToken.name,
         role: decodedToken.role,
       }); // No hay datos de usuario en la respuesta
+     
       router.push('/dashboard');
     } catch (error) {
       console.error('Error al iniciar sesión:', error);
