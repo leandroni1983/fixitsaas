@@ -44,6 +44,7 @@ export class OrdersController {
   @ApiResponse({ status: 403, description: 'Prohibido. No tenés acceso a este pedido' })
   @ApiResponse({ status: 404, description: 'Pedido no encontrado' })
     findOne(@Req() req, @Param('id', ParseIntPipe) id: number) {
+      console.log(req.user)
       return this.ordersService.findOne(id, req.user);
   }
 
