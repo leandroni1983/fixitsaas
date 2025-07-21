@@ -5,7 +5,7 @@ import { JwtGuard } from 'src/auth/jwt/jwt.guard';
 import { ApiBearerAuth, ApiBody, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CreateAdminDto } from './dto/create-admin.dto.specs';
 
-@ApiBearerAuth() // Agrega el candadito para enviar el JWT
+
 @ApiTags('users') // para agrupar las rutas de usuarios en Swagger
 @Controller('users') // todas las rutas comienzan con /users
 export class UsersController {

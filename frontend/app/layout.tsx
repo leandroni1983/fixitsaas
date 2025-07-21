@@ -1,20 +1,30 @@
-'use client'
 
-import { AuthProvider, useAuth } from './context/AuthContext';
-import Navbar from './components/Navbar';
-import { useEffect } from 'react';
+import { jwtDecode } from 'jwt-decode';
+import Navbar from './components/navbar/navbar';
 import './globals.css';
+import { FixitTokenPayload } from './types';
+import { cookies } from 'next/headers';
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children }: { children: React.ReactNode }) {
+
+    const cookieStore = await cookies()
+    const token = cookieStore.get('token')?.value;
+    let user: FixitTokenPayload | null = null;
   
-   
+    if (token) {
+      try {
+        user = jwtDecode(token);
+      } catch (error) {
+        console.error('Token inválido');
+      }
+    }
+  
+
   return (
     <html lang="es">
       <body>
-        <AuthProvider>
-          <Navbar />
+      <Navbar user={user} />
           {children}
-        </AuthProvider>
       </body>
     </html>
   );

@@ -18,7 +18,7 @@ export class OrdersService {
     return this.prisma.order.create({
       data: {
         ...dto,
-        userId: user.userId,
+        userId: user.sub,
         companyId: user.companyId
       },
     });
@@ -50,6 +50,7 @@ export class OrdersService {
  // If the user is not authorized to update the order, it throws a ForbiddenException.
 
   async update(id: number, dto: UpdateOrderDto, user: any) {
+  
   const existingOrder = await this.prisma.order.findUnique({ where: { id } });
 
   if (!existingOrder) {
@@ -92,7 +93,7 @@ export class OrdersService {
     throw new ForbiddenException('No tenés acceso a esta orden');
   }
 
-  if (user.role === 'TECHNICIAN' && order.userId !== user.userId) {
+  if (user.role === 'TECHNICIAN' && order.userId !== user.sub) {
     throw new ForbiddenException('No tenés acceso a esta orden');
   }
 

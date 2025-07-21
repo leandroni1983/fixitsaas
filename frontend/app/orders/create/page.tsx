@@ -74,7 +74,7 @@ const {
           </div>
 
           <div>
-            <label className="block text-sm font-medium">Estado</label>
+            <label className="block text-sm font-medium text-blue-800">Estado</label>
             <select {...register('status')} className="input">
               <option value="RECEIVED">Recibida</option>
               <option value="IN_PROCESS">En proceso</option>

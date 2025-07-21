@@ -1,3 +1,5 @@
+import { JwtPayload } from "jwt-decode";
+
 export type User = {
   id: number;
   email: string;
@@ -5,6 +7,24 @@ export type User = {
   role: 'ADMIN' | 'TECHNICIAN';
   companyId: number;
 };
+
+export type RegisterUserData = {
+  email: string;
+  password: string;
+  name: string;
+  role: 'ADMIN' | 'TECHNICIAN';
+  companyId: number;
+};
+
+export type OrderOne = {
+  id: number;
+  description: string;
+  status: OrderStatus;
+  clientName: string;
+  device: string;
+};
+
+
 
 export type OrderStatus = {
   RECEIVED: 'RECEIVED',
@@ -35,13 +55,7 @@ export type Company = {
 };
 
 
-export type RegisterUserData = {
-  email: string;
-  password: string;
-  name: string;
-  role: 'ADMIN' | 'TECHNICIAN';
-  companyId: number;
-};
+
 
 export type LoginUserData = {
   email: string;
@@ -62,3 +76,12 @@ export type RegisterAdminData = {
   name: string;
   companyName: string;
 };
+
+
+export interface FixitTokenPayload extends JwtPayload {
+  name: string;
+  role: string;
+  companyId: number;
+  mail: string;
+  sub: string;
+}
