@@ -1,116 +1,135 @@
-'use client';
+// 'use client';
 
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useRouter } from 'next/navigation';
-import { registerAdmin, registerUser } from '@/app/lib/api';
-import { registerSchema } from '@/app/types/schemas';
+// import { useForm } from 'react-hook-form';
+// import { zodResolver } from '@hookform/resolvers/zod';
+// import { z } from 'zod';
+// import { useRouter } from 'next/navigation';
+// import { useState } from 'react';
+// import { registerUser, registerAdmin } from '@/app/lib/api';
 
+// const formSchema = z.object({
+//   name: z.string().min(1, 'Nombre obligatorio'),
+//   email: z.string().email('Email inválido'),
+//   password: z.string().min(6, 'Mínimo 6 caracteres'),
+//   role: z.enum(['ADMIN', 'TECHNICIAN']),
+//   companyId: z.coerce.number().optional(), // para TECHNICIAN
+//   companyName: z.string().optional(), // para ADMIN
+// });
 
-// Tipo inferido del esquema de validación
-type RegisterForm = z.infer<typeof registerSchema>;
+// type RegisterForm = z.infer<typeof formSchema>;
 
-export default function RegisterPage() {
-  const router = useRouter();
-  const {
-    register,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm<RegisterForm>({
-    resolver: zodResolver(registerSchema),
-  });
+// export default function RegisterPage() {
+//   const {
+//     register,
+//     handleSubmit,
+//     watch,
+//     formState: { errors },
+//   } = useForm<RegisterForm>({
+//     resolver: zodResolver(formSchema),
+//     defaultValues: {
+//       role: 'TECHNICIAN',
+//     },
+//   });
 
-  const watchRole = watch('role');
+//   const router = useRouter();
+//   const [loading, setLoading] = useState(false);
+//   const role = watch('role');
 
-  const onSubmit = async (data: RegisterForm) => {
-    try {
-      if (data.role === 'ADMIN') {
-        const adminPayload = {
-          email: data.email,
-          password: data.password,
-          name: data.name,
-          companyName: data.companyName,
-        };
-        // Enviar datos de registro de administrador
-        await registerAdmin(adminPayload);
-      } else {
-        await registerUser(data);
-      }
-      router.push('/auth/login');
-    } catch (error) {
-      console.error('Error al registrar:', error);
-    }
-  };
+//   const onSubmit = async (data: RegisterForm) => {
+//     setLoading(true);
+//     try {
+//       if (data.role === 'ADMIN') {
+//         const adminPayload = {
+//           email: data.email,
+//           password: data.password,
+//           name: data.name,
+//           companyName: data.companyName!,
+//         };
+//         await registerAdmin(adminPayload);
+//       } else {
+//         const userPayload = {
+//           email: data.email,
+//           password: data.password,
+//           name: data.name,
+//           companyId: data.companyId!,
+//           role: 'TECHNICIAN',
+//         };
+//         await registerUser(userPayload);
+//       }
 
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="bg-white p-8 rounded-lg shadow-lg w-full max-w-md">
-        <h1 className="text-2xl font-bold mb-6 text-center text-blue-800">Registro</h1>
-        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-blue-800">Nombre</label>
-            <input {...register('name')} className="w-full p-2 border rounded-md" type="text" />
-            {errors.name && <p className="text-red-500 text-sm">{errors.name.message}</p>}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-blue-800">Email</label>
-            <input {...register('email')} className="w-full p-2 border rounded-md" type="email" />
-            {errors.email && <p className="text-red-500 text-sm">{errors.email.message}</p>}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-blue-800">Contraseña</label>
-            <input
-              {...register('password')}
-              className="w-full p-2 border rounded-md"
-              type="password"
-            />
-            {errors.password && <p className="text-red-500 text-sm">{errors.password.message}</p>}
-          </div>
-          <div>
-            <label className="block text-sm font-medium text-blue-800">Rol</label>
-            <select {...register('role')} className="w-full p-2 border rounded-md">
-              <option value="ADMIN">Admin</option>
-              <option value="TECHNICIAN">Técnico</option>
-            </select>
-            {errors.role && <p className="text-red-500 text-sm">{errors.role.message}</p>}
-          </div>
+//       router.push('/auth/login');
+//     } catch (err) {
+//       console.error('Error al registrar:', err);
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
 
-          {watchRole === 'ADMIN' ? (
-            <div>
-              <label className="block text-sm font-medium text-blue-800">Nombre de la empresa</label>
-              <input
-                {...register('companyName')}
-                className="w-full p-2 border rounded-md"
-                type="text"
-              />
-              {'companyName' in errors && errors.companyName && (
-                <p className="text-red-500 text-sm">{errors.companyName.message}</p>
-              )}
-            </div>
-          ) : (
-            <div>
-              <label className="block text-sm font-medium text-blue-800">Empresa (ID)</label>
-              <input
-                {...register('companyId', { valueAsNumber: true })}
-                className="w-full p-2 border rounded-md"
-                type="number"
-              />
-              {'companyId' in errors && errors.companyId && (
-                <p className="text-red-500 text-sm">{errors.companyId?.message}</p>
-              )}
-            </div>
-          )}
+//   return (
+//     <div className="max-w-md mx-auto p-6">
+//       <h1 className="text-2xl font-bold mb-4">Registro de Usuario</h1>
+//       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+//         <div>
+//           <label>Nombre</label>
+//           <input {...register('name')} className="input" />
+//           {errors.name && <p className="text-red-500">{errors.name.message}</p>}
+//         </div>
 
-          <button
-            type="submit"
-            className="w-full  text-white p-2 rounded-md bg-blue-800 hover:bg-blue-600 transition-colors"
-          >
-            Registrar
-          </button>
-        </form>
-      </div>
-    </div>
-  );
+//         <div>
+//           <label>Email</label>
+//           <input type="email" {...register('email')} className="input" />
+//           {errors.email && <p className="text-red-500">{errors.email.message}</p>}
+//         </div>
+
+//         <div>
+//           <label>Contraseña</label>
+//           <input type="password" {...register('password')} className="input" />
+//           {errors.password && <p className="text-red-500">{errors.password.message}</p>}
+//         </div>
+
+//         <div>
+//           <label>Rol</label>
+//           <select {...register('role')} className="input">
+//             <option value="TECHNICIAN">Técnico</option>
+//             <option value="ADMIN">Administrador</option>
+//           </select>
+//         </div>
+
+//         {role === 'TECHNICIAN' && (
+//           <div>
+//             <label>ID de Empresa</label>
+//             <input type="number" {...register('companyId')} className="input" />
+//             {errors.companyId && <p className="text-red-500">{errors.companyId.message}</p>}
+//           </div>
+//         )}
+
+//         {role === 'ADMIN' && (
+//           <div>
+//             <label>Nombre de la Empresa</label>
+//             <input {...register('companyName')} className="input" />
+//             {errors.companyName && <p className="text-red-500">{errors.companyName.message}</p>}
+//           </div>
+//         )}
+
+//         <button type="submit" className="btn-primary" disabled={loading}>
+//           {loading ? 'Registrando...' : 'Registrarse'}
+//         </button>
+//       </form>
+//     </div>
+//   );
+// }
+
+// app/auth/register/page.tsx
+import { redirect } from 'next/navigation';
+import getUserFromCookie from '@/app/lib/auth';
+import RegisterClientForm from './RegisterClientForm';
+export default async function RegisterPage() {
+  const user = await getUserFromCookie();
+
+  if (user) {
+    // ya logueado, lo redirigimos al dashboard
+    redirect('/dashboard');
+  }
+
+  return <RegisterClientForm companies={[]} />;
 }
