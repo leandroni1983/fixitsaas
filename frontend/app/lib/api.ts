@@ -1,39 +1,42 @@
-import axios from 'axios';
-import { LoginUserData, RegisterAdminData, RegisterUserData } from '../types';
+import { cookies } from "next/headers";
+import { User } from "../types";
 
 
-const api = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_API_URL,
-  headers: {
-    'Content-Type': 'application/json',
-  },
-});
+export async function getOrdersForUser() {
+  
+  const cookiesToString = (await cookies()).toString()
+  
+  const res = await fetch('http://localhost:3001/orders', {
+    credentials: 'include',
+    headers: {
+      Cookie: cookiesToString, 
+    },
+    cache: 'no-store',
+  });
 
-// Interceptor para añadir el token JWT
-api.interceptors.request.use((config) => {
-  const token = localStorage.getItem('token');
-  if (token) {
-    config.headers.Authorization = `Bearer ${token}`;
+  if (!res.ok) {
+    throw new Error('No se pudieron cargar las órdenes');
   }
-  return config;
-}, (error) => {
-  return Promise.reject(error);
-});
 
-// Interceptor para manejar errores (por ejemplo, 401 Unauthorized)
-api.interceptors.response.use(
-  (response) => response,
-  (error) => {
-    if (error.response?.status === 401) {
-      localStorage.removeItem('token');
-      window.location.href = '/auth/login';
-    }
-    return Promise.reject(error);
+  return res.json();
+}
+
+
+
+export const registerUser = async (data: User) => {
+  const response = await fetch('http://localhost:3001/auth/register',{
+    method: 'POST',
+    credentials: 'include',
+    headers:{
+    Cookie: cookiesToString,
+    },
+    cache: 'no-store',
+    body: JSON.stringify(data),
+  });
+   if (!response.ok) {
+    const errorData = await response.json();
+    throw new Error(errorData.message || 'Error al registrar usuario');
   }
-);
-// Funciones para interactuar con la API
-export const registerUser = (data: RegisterUserData) => api.post('/users', data);
-export const registerAdmin = (data: RegisterAdminData) => api.post('/users/register-admin', data);
-export const loginUser = (data:LoginUserData) => api.post('/auth/login', data);
-export const getOrders = () => api.get('/orders');
-export default api;
+
+  return response.json();
+};
